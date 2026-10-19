@@ -28,6 +28,7 @@ module Tarea1
 
 import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 import Control.Monad.Accum (MonadAccum(accum))
+import Text.XHtml (h2)
 
 -- =====================================================================
 -- Parte A: recursión explícita.
@@ -58,16 +59,51 @@ miFilt (x:xs)
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
 -- lista una sola vez:
---
+-- El primer elemento se guarda como mayor y menor, y se llama a la función recursiva para los elementos
+-- restantes, si es el nuevo máximo se cambia y volvemos a buscar en los elementos restantes, de forma
+-- análoga para el mínimo. Si no hay cambios se sigue buscando en los elementos restantes.
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
-mayorYMenor = undefined
+mayorYMenor [] = Nothing
+mayorYMenor (x:xs) =
+  let t = (x,x)
+  in Just (reMayorYMenor xs t)
+
+reMayorYMenor :: Ord a => [a] -> (a,a) -> (a,a)
+reMayorYMenor [] (x,y) = (x,y)
+reMayorYMenor (x:xs) (r,t)
+  | x > r     = reMayorYMenor xs (x,t)
+  | x < t     = reMayorYMenor xs (r,x)
+  | otherwise = reMayorYMenor xs (r,t)
 
 -- A3
+
 leerHora :: String -> Either String (Int, Int)
-leerHora = undefined
+leerHora [a, b, ':', c, d]
+  | hora > 23    = Left "hora fuera de rango"
+  | minutos > 59 = Left "minutos fuera de rango"
+  | otherwise    = Right (hora, minutos)
+  where
+    hora = read [a,b] :: Int
+    minutos = read [c,d] :: Int
+leerHora _ = Left "formato inválido"
 
 duracion :: String -> String -> Either String Int
-duracion = undefined
+duracion th1 th2 =
+  case leerHora th1 of
+    Left err1 -> Left err1
+    Right (h1,m1) ->
+      case leerHora th2 of
+        Left err2 -> Left err2
+        Right (h2,m2) ->
+          let t1 = toMin (h1,m1)
+              t2 = toMin (h2,m2)
+          in if t2 > t1
+             then Right (t2-t1)
+             else Right (t2 + 1440 - t1)
+          
+
+toMin :: (Int,Int) -> Int
+toMin (h,m) = 60 * h + m
 
 -- =====================================================================
 -- Parte B: orden superior.
