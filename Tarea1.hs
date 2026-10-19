@@ -6,7 +6,7 @@
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 --  Gemini, mayormente al buscar información en google sobre el uso de funciones,
---  la sintaxis correcta y  .
+--  la sintaxis correcta y como manejar tipos de datos.
 --
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -27,6 +27,7 @@ module Tarea1
   ) where
 
 import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
+import Control.Monad.Accum (MonadAccum(accum))
 
 -- =====================================================================
 -- Parte A: recursión explícita.
@@ -36,7 +37,23 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo = undefined
+esPalindromo x = 
+    let limpio = minus (miFilt x)
+    in limpio == invertir limpio
+
+invertir :: String -> String
+invertir [] = ""
+invertir (x:xs) = invertir xs ++ [x]
+
+minus :: String -> String
+minus [] = ""
+minus (x:xs) = toLower x : minus xs
+
+miFilt :: String -> String
+miFilt [] = ""
+miFilt (x:xs)
+  | isAlphaNum x = x : miFilt xs
+  | otherwise    = miFilt xs
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
