@@ -6,7 +6,9 @@
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 --  Gemini, mayormente al buscar información en google sobre el uso de funciones,
---  la sintaxis correcta y como manejar tipos de datos.
+--  la sintaxis correcta y como manejar tipos de datos. Una vez completaba el
+--  problema y verificaba que cubriera lo requerido lo confirmaba con la IA.
+--  Ninguna otra IA usada, 
 --
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -124,10 +126,10 @@ enDosSaltos = undefined
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
-miMap = undefined
+miMap f = foldr (\x acc -> f x : acc) []
 
 miFilter :: (a -> Bool) -> [a] -> [a]
-miFilter = undefined
+miFilter p = foldr (\x acc -> if p x then x : acc else acc) []
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
-miFoldl = undefined
+miFoldl f z xs = foldr (\x g acc -> g (f acc x)) id xs z
