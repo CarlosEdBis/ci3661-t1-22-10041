@@ -115,7 +115,12 @@ toMin (h,m) = 60 * h + m
 
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
-promedioSobreUmbral = undefined
+promedioSobreUmbral umbral xs =
+    let (suma, cuenta) = foldr f (0.0, 0) xs
+        f x (s, c) = if x > umbral then (s + x, c + 1) else (s, c)
+    in if cuenta == 0 
+       then Nothing 
+       else Just (suma / fromIntegral cuenta)
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
