@@ -7,8 +7,8 @@
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 --  Gemini, mayormente al buscar información en google sobre el uso de funciones,
 --  la sintaxis correcta y como manejar tipos de datos. Una vez completaba el
---  problema y verificaba que cubriera lo requerido lo confirmaba con la IA.
---  Ninguna otra IA usada, 
+--  problema y verificaba que cubriera lo requerido, lo confirmaba con la IA.
+--  Ninguna otra IA usada.
 --
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -124,10 +124,23 @@ promedioSobreUmbral umbral xs =
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo = undefined
+movimientosCaballo (x,y) = 
+  [(r, t) 
+  | r <- [x-2 .. x+2]
+  , t <- [y-2 .. y+2]
+  , (x-r) ^ 2 +(y-t) ^ 2 == 5
+  , r > 0 && r < 9
+  , t > 0 && t < 9
+  ]
+
+-- saqué la fórmula (x−x')^2+(y−y')^2=5 de internet, ya no podía más 
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos = undefined
+enDosSaltos pos = 
+  let saltos1 = movimientosCaballo pos
+      saltos2 = concatMap movimientosCaballo saltos1
+      unicos = foldr (\x acc -> if elem x acc then acc else x : acc) [] saltos2
+  in  length unicos
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]

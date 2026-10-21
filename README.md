@@ -1,2 +1,3 @@
-# ci3661-t1-22-10041
-Tarea 1
+# Tarea 1
+Carlos Bisogno
+22-10041
