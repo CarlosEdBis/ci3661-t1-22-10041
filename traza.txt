@@ -18,7 +18,21 @@ b)  foldl (-) 0 [0,0,4,1]
     = ((((0 - 0) - 0) - 4) - 1)
     = -5
 
-c)
+c)  Para comodidad de la lectura se hace la sustitución
+    H = \x g acc -> g (acc - x)
+
+    miFoldl (-) 0 [0, 0]
+    = foldr H id [0, 0] 0
+    = H 0 (foldr H id [0]) 0
+    = H 0 (H 0 (foldr H id [])) 0
+    = H 0 (H 0 id) 0
+    = H 0 (\acc -> id (acc - 0)) 0
+    = (\acc -> (\acc' -> id (acc' - 0)) (acc - 0)) 0
+    = (\acc' -> id (acc' - 0)) (0 - 0)
+    = id (0 - 0)
+    = id (0 - 0)
+    = id 0
+    = 0
 
 
 d) (a) y (b) dan resultados distintos porque la resta (-) no es una operación asociativa ni conmutativa. foldr asocia los operadores de derecha a izquierda, mientras que foldl los agrupa de izquierda a derecha. Al cambiar el orden de asociatividad, el resultado final se ve afectado.

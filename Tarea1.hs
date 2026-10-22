@@ -8,6 +8,8 @@
 --  Gemini, mayormente al buscar información en google sobre el uso de funciones,
 --  la sintaxis correcta y como manejar tipos de datos. Una vez completaba el
 --  problema y verificaba que cubriera lo requerido, lo confirmaba con la IA.
+--  La ayuda más directa fue en miFoldl, pues me costó ver que hacía falta para
+--  que funcionara debidamente.
 --  Ninguna otra IA usada.
 --
 -- =====================================================================
